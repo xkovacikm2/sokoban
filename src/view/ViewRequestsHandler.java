@@ -35,6 +35,10 @@ public final class ViewRequestsHandler {
         gui.consoleWrite(s+"\n");
     }
     
+    public static void setBtnStepVisible(){
+        gui.setBtnStepVisible();
+    }
+    
     /**
      * Converts number to string and calls overloaded method {@link ViewRequestsHandler#consolePrintln(java.lang.String)  consolePrintln}
      * @param n - Number to print to console

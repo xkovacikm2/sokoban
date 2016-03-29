@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import javax.swing.JFileChooser;
 import model.Box;
+import model.Coordinates;
 import model.Map;
 import model.MapParser;
 import model.MovingObject;
@@ -68,11 +69,9 @@ public class SimulationController {
             }
 
             s.generateFollowers().forEach(f -> {
-                if (!existingStates.containsKey(f.hashCode())) {
-                    if (StateValidator.isValid(f)) {
-                        stateQueue.add(f);
-                        existingStates.put(f.hashCode(), f);
-                    }
+                if (!existingStates.containsKey(f.hashCode()) && StateValidator.isValid(f)) {
+                    stateQueue.add(f);
+                    existingStates.put(f.hashCode(), f);
                 }
             });
         }
@@ -83,6 +82,7 @@ public class SimulationController {
         if (steps == null) {
             ViewRequestsHandler.consolePrintln("Failed");
         } else {
+            prepareAnimation(new ArrayList<>(steps), new Sokoban(map.getSokobanInitialPosition()), new Box(map.getBoxInitialPosition()));
             steps.forEach(s -> {
                 switch (s) {
                     case 0:
@@ -115,6 +115,14 @@ public class SimulationController {
                 }
             });
         }
+    }
+
+    private void prepareAnimation(List<Integer> steps, Sokoban sokoban, Box box) {
+        steps.remove(0);
+        AnimationController.getInstance().setBox(box);
+        AnimationController.getInstance().setSokoban(sokoban);
+        AnimationController.getInstance().setSteps(steps);
+        ViewRequestsHandler.setBtnStepVisible();
     }
 
     private File loadFile() {
