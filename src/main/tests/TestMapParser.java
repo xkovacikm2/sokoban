@@ -1,7 +1,3 @@
-/*
- * Copyright (C) 2015, eProvement s.r.o. All rights reserved.
- */
-
 package main.tests;
 
 import javax.swing.JFileChooser;
